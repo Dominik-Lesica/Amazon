@@ -227,9 +227,10 @@
   display: none;
 }
 
-.delete-quantity-link{
-  margin-left: 1px;
+.product-quantity .link-primary {
+  margin-left: 3px;
 }
+
 
 
 

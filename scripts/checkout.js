@@ -96,28 +96,16 @@ function generateCartSummaryHTML() {
 
 function saveNewQuantity(productId) {
   const newQuantity = Number(document.querySelector(`.js-quantity-input-${productId}`).value);
-      cart.forEach((cartItem) => {
-        if(productId === cartItem.productId) {
-          cartItem.quantity = newQuantity;
-        }
-      })
-      document.querySelector('.js-order-summary').innerHTML = generateCartSummaryHTML();
-      document.querySelector(`.js-cart-item-container-${productId}`).classList.remove("is-editing-quantity");
+  cart.forEach((cartItem) => {
+    if(productId === cartItem.productId) {
+      cartItem.quantity = newQuantity;
+    }
+  });
+  document.querySelector('.js-order-summary').innerHTML = generateCartSummaryHTML();
+  document.querySelector(`.js-cart-item-container-${productId}`).classList.remove("is-editing-quantity");
 }
 
-
-document.querySelector('.js-order-summary').innerHTML = generateCartSummaryHTML();
-
-document.querySelectorAll('.js-delete-link').forEach((link) => {
-  link.addEventListener('click', () => {
-    const productId = link.dataset.productId;
-    removeFromCart(productId);
-    document.querySelector(`.js-cart-item-container-${productId}`).remove();
-    updateCartQuantity();
-  });
-})
-
-function setupEventListeners () {
+function setUpEventListeners () {
   document.querySelectorAll('.update-quantity-link').forEach((link) => {
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
@@ -130,7 +118,7 @@ function setupEventListeners () {
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
       saveNewQuantity(productId);
-      setupEventListeners();
+      setUpEventListeners();
     })
   });
 
@@ -139,14 +127,23 @@ function setupEventListeners () {
       const productId = input.dataset.productId;
       if(event.key==='Enter') {
         saveNewQuantity(productId);
-        setupEventListeners();
+        setUpEventListeners();
       }
     })
   });
 }
 
-setupEventListeners();
+document.querySelector('.js-order-summary').innerHTML = generateCartSummaryHTML();
+document.querySelectorAll('.js-delete-link').forEach((link) => {
+  link.addEventListener('click', () => {
+    const productId = link.dataset.productId;
+    removeFromCart(productId);
+    document.querySelector(`.js-cart-item-container-${productId}`).remove();
+    updateCartQuantity();
+  });
+})
+setUpEventListeners();
 
-console.log(document.querySelectorAll('.js-quantity-input'));
+
 
 
