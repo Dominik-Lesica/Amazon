@@ -209,3 +209,11 @@
   margin-top: 11px;
   margin-bottom: 15px;
 }
+
+.update-container{
+  display: inline-block;
+}
+
+.quantity-input{
+  width: 30px;
+}
