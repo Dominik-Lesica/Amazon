@@ -136,25 +136,27 @@ function deliveryOptionsHtml(productId, cartItem) {
   return html;
 }
 
-document.querySelector('.js-order-summary').innerHTML = generateCartSummaryHTML();
-document.querySelectorAll('.js-delete-link').forEach((link) => {
-  link.addEventListener('click', () => {
-    const productId = link.dataset.productId;
-    removeFromCart(productId);
-    document.querySelector(`.js-cart-item-container-${productId}`).remove();
-    updateCartQuantity();
+function renderOrderSummary() {
+  document.querySelector('.js-order-summary').innerHTML = generateCartSummaryHTML();
+  document.querySelectorAll('.js-delete-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      const productId = link.dataset.productId;
+      removeFromCart(productId);
+      document.querySelector(`.js-cart-item-container-${productId}`).remove();
+      updateCartQuantity();
+    });
   });
-});
 
-document.querySelectorAll('.js-delivery-option').forEach((option) => {
-  option.addEventListener('click', () => {
-    const {productId, deliveryOptionId} = option.dataset;
-    updateDeliveryOption(productId, deliveryOptionId);
-    generateCartSummaryHTML();
+  document.querySelectorAll('.js-delivery-option').forEach((option) => {
+    option.addEventListener('click', () => {
+      const {productId, deliveryOptionId} = option.dataset;
+      updateDeliveryOption(productId, deliveryOptionId);
+      renderOrderSummary();
+    })
   })
-})
-setUpEventListeners();
-
+  setUpEventListeners();
+}
+ renderOrderSummary();
 
 
 
