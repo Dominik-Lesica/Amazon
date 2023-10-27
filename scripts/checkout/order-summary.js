@@ -1,8 +1,9 @@
-import { cart, removeFromCart,updateCartQuantity, updateDeliveryOption } from "../../data/cart.js";
+import { cart, removeFromCart,updateCartQuantity, updateDeliveryOption, saveToStorage } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import  formatCurrency  from "../utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import {deliveryOptions, getDeliveryOption} from "../../data/delivery-options.js";
+import renderPaymentSummary from "./payment-summary.js";
 
 function generateCartSummaryHTML() {
   let cartSummeryHtml = '';
@@ -82,6 +83,8 @@ function setUpEventListeners () {
       const productId = link.dataset.productId;
       saveNewQuantity(productId);
       setUpEventListeners();
+      saveToStorage();
+      renderPaymentSummary();
     })
   });
 
@@ -91,6 +94,8 @@ function setUpEventListeners () {
       if(event.key==='Enter') {
         saveNewQuantity(productId);
         setUpEventListeners();
+        saveToStorage();
+        renderPaymentSummary();
       }
     })
   });
@@ -134,6 +139,7 @@ export default function renderOrderSummary() {
       removeFromCart(productId);
       document.querySelector(`.js-cart-item-container-${productId}`).remove();
       updateCartQuantity();
+      renderPaymentSummary();
     });
   });
 
@@ -142,6 +148,7 @@ export default function renderOrderSummary() {
       const {productId, deliveryOptionId} = option.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     })
   })
   setUpEventListeners();
