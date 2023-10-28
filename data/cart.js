@@ -33,11 +33,16 @@ export function removeFromCart(productId) {
   saveToStorage();
 }
 
-export function updateCartQuantity() {
+export function renderCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity+=cartItem.quantity;
   });
+  return cartQuantity;
+}
+
+export function updateCartQuantity() {
+  const cartQuantity = renderCartQuantity();
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 };
 

@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { cart, renderCartQuantity } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/delivery-options.js";
 import formatCurrency from "../utils/money.js";
@@ -6,20 +6,18 @@ import formatCurrency from "../utils/money.js";
 export default function renderPaymentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
-  let cartQuantity = 0;
   cart.forEach((item) => {
     const product = getProduct(item.productId);
     productPriceCents += product.priceCents * item.quantity;
 
     const deliveryOption = getDeliveryOption(item.deliveryOptionId);
     shippingPriceCents  += deliveryOption.priceCents; 
-
-    cartQuantity += item.quantity;
   });
 
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
   const taxCents = totalBeforeTaxCents*0.1;
   const totalCents = totalBeforeTaxCents + taxCents;
+  const cartQuantity = renderCartQuantity();
 
   const paymentSummaryHtml = `
     <div class="payment-summary-title">
