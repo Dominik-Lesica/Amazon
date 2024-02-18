@@ -15,7 +15,8 @@ function generateCartSummaryHTML() {
     
     const dateString = calculateDeliveryDate(deliveryOption);
   
-    cartSummeryHtml+=`<div class="cart-item-container js-cart-item-container-${productId}">
+    cartSummeryHtml+=`<div class="cart-item-container
+      js-cart-item-container js-cart-item-container-${productId}">
       <div class="delivery-date">
         Delivery date: ${dateString}
       </div>
@@ -31,14 +32,15 @@ function generateCartSummaryHTML() {
           <div class="product-price">
             $${formatCurrency(product.priceCents)}
           </div>
-          <div class="product-quantity">
+          <div class="product-quantity 
+          js-product-quantity-${productId}" >
             <span>
               Quantity: <span class="quantity-label">${cartItem.quantity}</span>
             </span>
             <span class="update-quantity-link link-primary" data-product-id="${productId}">Update</span>
             <input type="number" min="1" max="9" value="${cartItem.quantity}" class="quantity-input js-quantity-input js-quantity-input-${productId}" data-product-id="${productId}">
             <a class="save-link link-primary js-save-link" data-product-id="${productId}">Save</a>
-            <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${productId}">
+            <span class="delete-quantity-link link-primary js-delete-link js-delete-link-${productId}" data-product-id="${productId}">
               Delete
             </span>
           </div>
