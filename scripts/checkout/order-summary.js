@@ -103,19 +103,19 @@ function setUpEventListeners () {
 
 function deliveryOptionsHtml(productId, cartItem) {
   let html = '';
-  deliveryOptions.forEach((deliveryOption) => {
+  deliveryOptions.forEach((deliveryOption, i) => {
     
     const dateString = calculateDeliveryDate(deliveryOption);
     const priceString = deliveryOption.priceCents === 0
      ? 'FREE'
      : `${formatCurrency(deliveryOption.priceCents)}`;
 
-     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
+    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
     html += `
       <div class="delivery-option js-delivery-option" data-product-id="${productId}"
       data-delivery-option-id="${deliveryOption.id}">
         <input type="radio" ${isChecked ? 'checked' : ''}
-          class="delivery-option-input"
+          class="delivery-option-input js-delivery-option-input-${productId}-${i}"
           name="delivery-option-${productId}">
         <div>
           <div class="delivery-option-date">

@@ -15,13 +15,9 @@ export const deliveryOptions = [{
 }];
 
 export function getDeliveryOption(deliveryOptionId) {
-  let deliveryOption;
-  deliveryOptions.forEach((option) => {
-    if (deliveryOptionId === option.id) {
-      deliveryOption = option;
-    }
-  });
-  return deliveryOption;
+  return deliveryOptions.find((option) => {
+    return deliveryOptionId === option.id
+  })
 }
 
 export function calculateDeliveryDate(deliveryOption) {

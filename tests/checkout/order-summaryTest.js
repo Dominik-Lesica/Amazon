@@ -55,4 +55,13 @@ describe('Test suite: renderOrderSummary', () => {
     
     TestProduct2Display()
   })
+
+  it('Updates the delivery option', () => {
+    document.querySelector(`.js-delivery-option-input-${productId1}-2`).click();
+
+    expect(cart.length).toEqual(2);
+    expect(cart[0].deliveryOptionId).toEqual('3');
+    expect(document.querySelector('.js-shipping-cost').innerText).toEqual('$9.99');
+    expect(document.querySelector('.js-total-cost').innerText).toEqual('$46.02')
+  })
 })

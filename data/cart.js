@@ -1,3 +1,5 @@
+import { getDeliveryOption } from "./delivery-options.js";
+
 export let cart;
 
 loadFromStorage()
@@ -54,13 +56,12 @@ export function updateCartQuantity() {
 };
 
 export function updateDeliveryOption(productId, deliveryOptionId) {
-  let matchingItem;
+  const matchingItem = cart.find((cartItem) => {
+    return cartItem.productId === productId 
+  })
 
-  cart.forEach((Cartitem) => {
-    if(productId===Cartitem.productId) {
-      matchingItem=Cartitem;
-    }
-  });
+  if(!matchingItem) return;
+  if(!getDeliveryOption(deliveryOptionId)) return;
 
   matchingItem.deliveryOptionId = deliveryOptionId;
   saveToStorage();
